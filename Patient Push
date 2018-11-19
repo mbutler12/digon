@@ -1,0 +1,22 @@
+pragma solidity ^0.4.25;
+
+contract Digon {
+    address owner;
+    
+    constructor() {
+        owner = msg.sender;
+        isPatient[msg.sender] = true;
+    }
+    
+    mapping(address => bool) public isPatient;
+    mapping(address => uint) private patientData;
+    
+    function addpatientData (address _patient) public {
+        require(msg.sender == owner,"adding Denied");
+        isPatient[_patient] = true;
+    }
+    
+    function getpatientData (address _patient) private view returns (uint) {
+        require(msg.sender == owner || msg.sender == _patient, "Log Denied");
+        return patientData[_patient];
+    }
